@@ -40,136 +40,24 @@ export const Filters: React.FC<Props> = ({ className }) => {
         className="mt-5"
         limit={6}
         defaultItem={[
-          {
-            text: "Сырy",
-            value: "1",
-          },
-          {
-            text: "Колбаса",
-            value: "2",
-          },
-          {
-            text: "Сырy",
-            value: "3",
-          },
-          {
-            text: "Колбаса",
-            value: "4",
-          },
-          {
-            text: "Сырy",
-            value: "5",
-          },
-          {
-            text: "Колбаса",
-            value: "6",
-          },
-          {
-            text: "Сырy",
-            value: "7",
-          },
-          {
-            text: "Колбаса",
-            value: "8",
-          },
+          { text: "Томатный соус", value: "1" },
+          { text: "Моцарелла", value: "2" },
+          { text: "Пепперони", value: "3" },
+          { text: "Грибы", value: "4" },
+          { text: "Оливки", value: "5" },
+          { text: "Пармезан", value: "6" },
+          { text: "Бекон", value: "7" },
+          { text: "Базилик", value: "8" },
         ]}
         items={[
-          {
-            text: "Сырy",
-            value: "1",
-          },
-          {
-            text: "Колбаса",
-            value: "2",
-          },
-          {
-            text: "Сырy",
-            value: "3",
-          },
-          {
-            text: "Колбаса",
-            value: "4",
-          },
-          {
-            text: "Сырy",
-            value: "5",
-          },
-          {
-            text: "Колбаса",
-            value: "6",
-          },
-          {
-            text: "Сырy",
-            value: "7",
-          },
-          {
-            text: "Колбаса",
-            value: "8",
-          },
-          {
-            text: "Сырy",
-            value: "1",
-          },
-          {
-            text: "Колбаса",
-            value: "2",
-          },
-          {
-            text: "Сырy",
-            value: "3",
-          },
-          {
-            text: "Колбаса",
-            value: "4",
-          },
-          {
-            text: "Сырy",
-            value: "5",
-          },
-          {
-            text: "Колбаса",
-            value: "6",
-          },
-          {
-            text: "Сырy",
-            value: "7",
-          },
-          {
-            text: "Колбаса",
-            value: "8",
-          },
-          {
-            text: "Сырy",
-            value: "1",
-          },
-          {
-            text: "Колбаса",
-            value: "2",
-          },
-          {
-            text: "Сырy",
-            value: "3",
-          },
-          {
-            text: "Колбаса",
-            value: "4",
-          },
-          {
-            text: "Сырy",
-            value: "5",
-          },
-          {
-            text: "Колбаса",
-            value: "6",
-          },
-          {
-            text: "Сырy",
-            value: "7",
-          },
-          {
-            text: "Колбаса",
-            value: "8",
-          },
+          { text: "Томатный соус", value: "1" },
+          { text: "Моцарелла", value: "2" },
+          { text: "Пепперони", value: "3" },
+          { text: "Грибы", value: "4" },
+          { text: "Оливки", value: "5" },
+          { text: "Пармезан", value: "6" },
+          { text: "Бекон", value: "7" },
+          { text: "Базилик", value: "8" },
         ]}
       />
     </div>

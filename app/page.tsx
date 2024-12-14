@@ -25,76 +25,116 @@ export default function Home() {
                 items={[
                   {
                     id: 1,
-                    name: "Маргарита",
+                    name: "Пепперони",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 26,
+                    items: [{ price: 27 }],
                   },
                   {
                     id: 2,
-                    name: "Маргарита",
+                    name: "Пепперони",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 26,
+                    items: [{ price: 27 }],
                   },
                   {
                     id: 3,
-                    name: "Маргарита",
+                    name: "Пепперони",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 26,
+                    items: [{ price: 27 }],
                   },
                   {
                     id: 4,
-                    name: "Маргарита",
+                    name: "Пепперони",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 26,
+                    items: [{ price: 27 }],
                   },
                 ]}
                 categoryId={1}
               />
+
               <ProductGropList
                 title="Суши"
                 items={[
                   {
                     id: 1,
-                    name: "Маргарита",
+                    name: "Четыре сыра",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 28,
+                    items: [{ price: 29 }],
                   },
                   {
                     id: 2,
-                    name: "Маргарита",
+                    name: "Четыре сыра",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 28,
+                    items: [{ price: 29 }],
                   },
                   {
                     id: 3,
-                    name: "Маргарита",
+                    name: "Четыре сыра",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 28,
+                    items: [{ price: 29 }],
                   },
                   {
                     id: 4,
-                    name: "Маргарита",
+                    name: "Четыре сыра",
                     imageUrl:
                       "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
-                    price: 24,
-                    items: [{ price: 25 }],
+                    price: 28,
+                    items: [{ price: 29 }],
                   },
                 ]}
                 categoryId={2}
+              />
+
+              <ProductGropList
+                title="Напитки"
+                items={[
+                  {
+                    id: 1,
+                    name: "Гавайская",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
+                    price: 30,
+                    items: [{ price: 31 }],
+                  },
+                  {
+                    id: 2,
+                    name: "Гавайская",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
+                    price: 30,
+                    items: [{ price: 31 }],
+                  },
+                  {
+                    id: 3,
+                    name: "Гавайская",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
+                    price: 30,
+                    items: [{ price: 31 }],
+                  },
+                  {
+                    id: 4,
+                    name: "Гавайская",
+                    imageUrl:
+                      "https://media.dodostatic.net/image/r:292x292/11EE7D5EDBB090A79F2FE1F49438FAE8.avif",
+                    price: 30,
+                    items: [{ price: 31 }],
+                  },
+                ]}
+                categoryId={3}
               />
             </div>
           </div>
