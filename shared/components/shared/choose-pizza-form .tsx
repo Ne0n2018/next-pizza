@@ -4,16 +4,10 @@ import { Title } from "./title";
 import { Button } from "../ui";
 import { PizzaImage } from "./pizza-image";
 import { GroupVariants } from "./group-variants";
-import {
-  mapPizzaType,
-  PizzaSize,
-  pizzaSizes,
-  PizzaType,
-  pizzaTypes,
-} from "@/shared/constants/pizza";
+import { PizzaSize, PizzaType, pizzaTypes } from "@/shared/constants/pizza";
 import { Ingredient, ProductItem } from "@prisma/client";
 import { IngredientItem } from "./ingredient-item";
-import { useSet } from "react-use";
+import { getPizzaDetails, usePizzaOptions } from "@/shared/lib";
 
 interface Props {
   imageUrl: string;
@@ -32,21 +26,23 @@ export const ChoosePizzaForm: React.FC<Props> = ({
   items,
   onClickAddCart,
 }) => {
-  const [size, setSize] = React.useState<PizzaSize>(20);
-  const [type, setType] = React.useState<PizzaType>(1);
-  const [selectedIngredients, { toggle: addIngredient }] = useSet(
-    new Set<number>([])
+  const {
+    size,
+    type,
+    selectedIngredients,
+    availableSizes,
+    addIngredient,
+    setSize,
+    setType,
+  } = usePizzaOptions(items);
+
+  const { textDetails, totalPrice } = getPizzaDetails(
+    type,
+    size,
+    items,
+    ingredients,
+    selectedIngredients
   );
-
-  const pizzaPrice = items.find(
-    (item) => item.pizzaType === type && item.size === size
-  )!.price;
-  const totalIngredientPrice = items
-    .filter((item) => selectedIngredients.has(item.id))
-    .reduce((acc, item) => acc + item.price, 0);
-
-  const textDetails = `${size} см, ${mapPizzaType[type]} тесто`;
-  const totalPrice = pizzaPrice + totalIngredientPrice;
 
   const handleCLickAdd = () => {
     onClickAddCart?.();
@@ -56,6 +52,7 @@ export const ChoosePizzaForm: React.FC<Props> = ({
       ingredients: selectedIngredients,
     });
   };
+
   return (
     <div className={cn("flex flex-1 ", className)}>
       <PizzaImage src={imageUrl} size={size} />
@@ -64,13 +61,13 @@ export const ChoosePizzaForm: React.FC<Props> = ({
         <p className="text-gray-400">{textDetails}</p>
         <div className="flex flex-col gap-4 my-5">
           <GroupVariants
-            items={pizzaSizes}
-            Value={String(size)}
+            items={availableSizes}
+            value={String(size)}
             onClick={(value) => setSize(Number(value) as PizzaSize)}
           />
           <GroupVariants
             items={pizzaTypes}
-            Value={String(type)}
+            value={String(type)}
             onClick={(value) => setType(Number(value) as PizzaType)}
           />
         </div>
