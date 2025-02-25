@@ -2,7 +2,6 @@ generator client {
     provider = "prisma-client-js"
 }
 
-// prisma/schema.prisma
 datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
@@ -12,30 +11,29 @@ model User {
     id Int @id @default(autoincrement())
 
     fullName String
-    email    String @unique
+    email    String    @unique
     password String
+    role     UserRole  @default(USER)
+    verified DateTime?
 
-    role     UserRole @default(USER)
-    verified DateTime
+    provider   String?
+    providerId String?
+
+    cart             Cart?
+    orders           Order[]
+    verificationCode VerificationCode?
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    card Card?
-
-    order Order[]
-
-    vereficationCode VereficationCode?
+    updatedAt DateTime @updatedAt
 }
 
 model Category {
-    id Int @id @default(autoincrement())
-
+    id       Int       @id @default(autoincrement())
     name     String    @unique
     products Product[]
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt DateTime @updatedAt
 }
 
 model Product {
@@ -44,14 +42,14 @@ model Product {
     name     String
     imageUrl String
 
-    ingredient Ingredient[]
-    items      ProductItem[]
+    ingredients Ingredient[]
+    items       ProductItem[]
 
     category   Category @relation(fields: [categoryId], references: [id])
     categoryId Int
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt DateTime @updatedAt
 }
 
 model ProductItem {
@@ -61,55 +59,57 @@ model ProductItem {
     size      Int?
     pizzaType Int?
 
+    cartItems CartItem[]
+
     product   Product @relation(fields: [productId], references: [id])
     productId Int
-
-    cardItem CardItem[]
 }
 
 model Ingredient {
     id Int @id @default(autoincrement())
 
     name     String
-    price    Float
+    price    Int
     imageUrl String
 
-    product Product[]
+    products  Product[]
+    cartItems CartItem[]
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    cardItem CardItem[]
+    updatedAt DateTime @updatedAt
 }
 
-model Card {
+model Cart {
     id Int @id @default(autoincrement())
 
     user   User? @relation(fields: [userId], references: [id])
     userId Int?  @unique
+
+    items CartItem[]
 
     token String
 
     totalAmount Int @default(0)
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
-
-    cardItem CardItem[]
+    updatedAt DateTime @updatedAt
 }
 
-model CardItem {
+model CartItem {
     id Int @id @default(autoincrement())
+
+    cart   Cart @relation(fields: [cartId], references: [id])
+    cartId Int
 
     productItem   ProductItem @relation(fields: [productItemId], references: [id])
     productItemId Int
 
-    card   Card @relation(fields: [cardId], references: [id])
-    cardId Int
-
-    quantity Int
+    quantity Int @default(1)
 
     ingredients Ingredient[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Order {
@@ -118,43 +118,64 @@ model Order {
     user   User? @relation(fields: [userId], references: [id])
     userId Int?
 
-    token       String
+    token String
+
     totalAmount Int
     status      OrderStatus
     paymentId   String?
 
     items Json
 
-    fullname String
+    fullName String
     email    String
     phone    String
-    addres   String
+    address  String
     comment  String?
 
     createdAt DateTime @default(now())
-    updateAt  DateTime @updatedAt
+    updatedAt DateTime @updatedAt
 }
 
-model VereficationCode {
+model VerificationCode {
     id Int @id @default(autoincrement())
 
     user   User @relation(fields: [userId], references: [id])
     userId Int  @unique
 
-    code String @unique
+    code String
 
-    createsAt DateTime @default(now())
+    createdAt DateTime @default(now())
 
     @@unique([userId, code])
 }
 
-enum UserRole {
-    USER
-    ADMIN
+model Story {
+    id              Int    @id @default(autoincrement())
+    previewImageUrl String
+
+    items StoryItem[]
+
+    createdAt DateTime @default(now())
+}
+
+model StoryItem {
+    id Int @id @default(autoincrement())
+
+    storyId Int
+    story   Story @relation(fields: [storyId], references: [id])
+
+    sourceUrl String
+
+    createdAt DateTime @default(now())
 }
 
 enum OrderStatus {
     PENDING
     SUCCEEDED
     CANCELLED
+}
+
+enum UserRole {
+    USER
+    ADMIN
 }
