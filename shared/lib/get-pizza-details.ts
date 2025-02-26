@@ -1,6 +1,6 @@
-import { mapPizzaType, PizzaSize, PizzaType } from "../constants/pizza";
 import { calcTotalPizzaPrice } from "./calc-total-pizza-price";
 import { Ingredient, ProductItem } from "@prisma/client";
+import { PizzaSize, PizzaType, mapPizzaType } from "../constants/pizza";
 
 export const getPizzaDetails = (
   type: PizzaType,
@@ -16,10 +16,7 @@ export const getPizzaDetails = (
     ingredients,
     selectedIngredients
   );
+  const textDetaills = `${size} см, ${mapPizzaType[type]} пицца`;
 
-  const textDetails = `${size} см, ${mapPizzaType[type]} тесто`;
-  return {
-    textDetails,
-    totalPrice,
-  };
+  return { totalPrice, textDetaills };
 };

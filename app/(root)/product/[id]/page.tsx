@@ -1,10 +1,6 @@
-import {
-  Container,
-  GroupVariants,
-  PizzaImage,
-  Title,
-} from "@/shared/components/shared";
 import { prisma } from "@/prisma/prisma-client";
+import { Container } from "@/shared/components/shared";
+import { ProductForm } from "@/shared/components/shared/product-form";
 import { notFound } from "next/navigation";
 
 export default async function ProductPage({
@@ -13,50 +9,29 @@ export default async function ProductPage({
   params: { id: string };
 }) {
   const product = await prisma.product.findFirst({
-    where: {
-      id: Number(id),
+    where: { id: Number(id) },
+    include: {
+      ingredients: true,
+      category: {
+        include: {
+          products: {
+            include: {
+              items: true,
+            },
+          },
+        },
+      },
+      items: true,
     },
   });
+
   if (!product) {
     return notFound();
   }
+
   return (
     <Container className="flex flex-col my-10">
-      <div className="flex flex-1">
-        <PizzaImage src={product.imageUrl} className="" size={40} />
-
-        <div className="w-[590px] bg-[#FCFCFC] p-7">
-          <Title
-            text={product.name}
-            size="md"
-            className="font-extrabold mb-1"
-          />
-          <p className="text-gray-400">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas
-            necessitatibus porro iste debitis distinctio recusandae tenetur,
-            praesentium animi sapiente aut sequi deleniti dolor ab impedit illo
-            quaerat. Voluptate, fuga laboriosam.
-          </p>
-
-          <GroupVariants
-            items={[
-              {
-                name: "маленькая",
-                value: "1",
-              },
-              {
-                name: "средняя",
-                value: "2",
-              },
-              {
-                name: "большая",
-                value: "3",
-                disabled: true,
-              },
-            ]}
-          />
-        </div>
-      </div>
+      <ProductForm product={product} />
     </Container>
   );
 }

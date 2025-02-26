@@ -16,6 +16,10 @@ export async function PATCH(
     }
 
     const data = (await req.json()) as { quantity: number };
+    if (!data || typeof data.quantity !== "number" || data.quantity <= 0) {
+      return NextResponse.json({ error: "Invalid quantity" }, { status: 400 });
+    }
+
     const token = req.cookies.get("cartToken")?.value;
 
     if (!token) {
@@ -86,9 +90,6 @@ export async function DELETE(
     return NextResponse.json(updatedUserCart);
   } catch (error) {
     console.error("[CART_DELETE] Server error:", error);
-    return NextResponse.json(
-      { error: "Не удалось удалить корзину" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "[Cart DELETE] error" }, { status: 500 });
   }
 }

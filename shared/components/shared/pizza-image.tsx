@@ -2,12 +2,12 @@ import { cn } from "@/shared/lib/utils";
 import React from "react";
 
 interface Props {
-  src: string;
-  size?: 20 | 30 | 40;
   className?: string;
+  imageUrl: string;
+  size: 20 | 30 | 40;
 }
 
-export const PizzaImage: React.FC<Props> = ({ className, src, size }) => {
+export const PizzaImage: React.FC<Props> = ({ imageUrl, size, className }) => {
   return (
     <div
       className={cn(
@@ -16,8 +16,8 @@ export const PizzaImage: React.FC<Props> = ({ className, src, size }) => {
       )}
     >
       <img
-        src={src}
-        alt="product"
+        src={imageUrl}
+        alt="Logo"
         className={cn(
           "relative left-2 top-2 transition-all z-10 duration-300",
           {
