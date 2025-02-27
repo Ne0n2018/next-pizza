@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { _ingredients, category, products } from "./const";
+import { category, _ingredients, products } from "./const";
 import { prisma } from "./prisma-client";
 import { hashSync } from "bcrypt";
 
@@ -18,7 +18,7 @@ const generateProductItem = ({
 }) => {
   return {
     productId,
-    price: randomDecimalNumber(190, 600),
+    price: randomDecimalNumber(3, 30),
     pizzaType,
     size,
   } as Prisma.ProductItemUncheckedCreateInput;
@@ -44,6 +44,8 @@ async function up() {
     ],
   });
 
+  await prisma.$executeRaw`DISCARD PLANS`;
+
   await prisma.category.createMany({
     data: category,
   });
@@ -63,7 +65,9 @@ async function up() {
         "https://media.dodostatic.net/image/r:233x233/11EE7D61304FAF5A98A6958F2BB2D260.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(0, 5),
+        connect: _ingredients
+          .slice(0, 5)
+          .map((ingredient) => ({ id: ingredient.id })),
       },
     },
   });
@@ -75,7 +79,9 @@ async function up() {
         "https://media.dodostatic.net/image/r:233x233/11EE7D610CF7E265B7C72BE5AE757CA7.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(5, 10),
+        connect: _ingredients
+          .slice(5, 10)
+          .map((ingredient) => ({ id: ingredient.id })),
       },
     },
   });
@@ -87,7 +93,9 @@ async function up() {
         "https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp",
       categoryId: 1,
       ingredients: {
-        connect: _ingredients.slice(10, 40),
+        connect: _ingredients
+          .slice(10, 40)
+          .map((ingredient) => ({ id: ingredient.id })),
       },
     },
   });
