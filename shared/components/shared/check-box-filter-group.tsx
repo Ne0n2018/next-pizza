@@ -2,14 +2,13 @@
 import { Filtercheckbox, FilterCheckboxProps } from "./filter-checkbox";
 import { Input, Skeleton } from "../ui";
 import React from "react";
-import { Item } from "@radix-ui/react-select";
 
-type Item = FilterCheckboxProps;
+type FilterItem = FilterCheckboxProps; // Изменил название типа
 
 interface Props {
   title: string;
-  items: Item[];
-  defaultItem?: Item[];
+  items: FilterItem[];
+  defaultItem?: FilterItem[];
   limit?: number;
   loading?: boolean;
   searchInputPlaceholder?: string;
@@ -24,45 +23,42 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
   title,
   items,
   defaultItem,
-  limit,
+  limit = 5, // Добавил значение по умолчанию
   loading,
   searchInputPlaceholder = "поиск...",
   onClickCheckBox,
   name,
-  defaultValue,
   selectedIds,
   className,
-}: Props) => {
+}) => {
   const [showAll, setShowAll] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
+
   if (loading) {
     return (
       <div className={className}>
         <p className="font-bold mb-3">{title}</p>
-        {...Array(limit)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton key={index} className="h-6 mb-4 rounded-[8px]" />
-          ))}
+        {Array.from({ length: limit }).map((_, index) => (
+          <Skeleton key={index} className="h-6 mb-4 rounded-[8px]" />
+        ))}
         <Skeleton className="h-6 mb-4 rounded-[8px] w-28" />
       </div>
     );
   }
+
   const list = showAll
     ? items.filter((item) =>
         item.text.toLowerCase().includes(searchValue.toLowerCase())
       )
     : (defaultItem || items).slice(0, limit);
-  const onChangeSearchInput = (value: string) => {
-    setSearchValue(value);
-  };
+
   return (
     <div className={className}>
       <p className="font-bold mb-3">{title}</p>
       {showAll && (
         <div className="mb-5">
           <Input
-            onChange={(e) => onChangeSearchInput(e.target.value)}
+            onChange={(e) => setSearchValue(e.target.value)}
             placeholder={searchInputPlaceholder}
             className="bg-gray-50 border-none"
           />

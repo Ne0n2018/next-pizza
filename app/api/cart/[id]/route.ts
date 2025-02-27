@@ -4,10 +4,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = Number(params.id);
+    const resolvedParams = await context.params;
+    const id = Number(resolvedParams.id);
+
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "Invalid cart item ID" },
@@ -53,10 +55,12 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = Number(params.id);
+    const resolvedParams = await context.params;
+    const id = Number(resolvedParams.id);
+
     if (isNaN(id)) {
       return NextResponse.json(
         { error: "Invalid cart item ID" },
@@ -89,7 +93,7 @@ export async function DELETE(
 
     return NextResponse.json(updatedUserCart);
   } catch (error) {
-    console.error("[CART_DELETE] Server error:", error);
+    console.error("[Cart DELETE] Server error:", error);
     return NextResponse.json({ error: "[Cart DELETE] error" }, { status: 500 });
   }
 }

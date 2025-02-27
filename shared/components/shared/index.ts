@@ -9,7 +9,7 @@ export { Filtercheckbox } from "./filter-checkbox";
 export { RangeSlider } from "./rangeslider";
 export { CheckboxFiltersGroup } from "./check-box-filter-group";
 export { ProductCard } from "./product-card";
-export { ProductGropList } from "./product-grop-list";
+export { ProductGroupList } from "./product-grop-list";
 export { SearchInput } from "./search-input";
 export { PizzaImage } from "./pizza-image";
 export { GroupVariants } from "./group-variants";
