@@ -24,4 +24,6 @@ export { ChoosePizzaForm } from "./choose-pizza-form";
 export { WhiteBlock } from "./white-block";
 export { CheckoutItemDetails } from "./checkout-item-details";
 export { CheckoutItem } from "./checkout-item";
+export { CheckoutItemSkeleton } from "./checkout-item-skeleton";
+export { CheckoutSideBar } from "./checkout-side-bar";
 export * from "./modals";

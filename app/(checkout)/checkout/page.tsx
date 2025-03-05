@@ -1,14 +1,32 @@
+"use client";
 import {
   CheckoutItem,
-  CheckoutItemDetails,
+  CheckoutSideBar,
   Container,
   Title,
   WhiteBlock,
 } from "@/shared/components/shared";
-import { Button, Input, Textarea } from "@/shared/components/ui";
-import { ArrowRight, Package, Percent, Truck } from "lucide-react";
+import { Input, Textarea } from "@/shared/components/ui";
+import { PizzaSize, PizzaType } from "@/shared/constants/pizza";
+import { useCart } from "@/shared/hooks/use-cart";
+import { getCartItemDetails } from "@/shared/lib/get-cart-item-details";
 
+const VAT = 15;
+const DELIVERY = 10;
 export default function checkoutPage() {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { totalAmount, updateItemQuantity, items, removeCartItem } = useCart();
+  const VATprice = (totalAmount * VAT) / 100;
+  const totalPrice = totalAmount + VATprice + DELIVERY;
+
+  const onClickCountButton = (
+    id: number,
+    quantity: number,
+    type: "plus" | "minus"
+  ) => {
+    const newQuantity = type === "plus" ? quantity + 1 : quantity - 1;
+    updateItemQuantity(id, newQuantity);
+  };
   return (
     <Container className="mt-10">
       <Title
@@ -21,18 +39,25 @@ export default function checkoutPage() {
         <div className="flex flex-col flex-1 gap-10 mb-20">
           <WhiteBlock title="1. Ваша корзина">
             <div className="flex flex-col gap-5">
-              <CheckoutItem
-                id={0}
-                imageUrl={
-                  "https://media.dodostatic.net/image/r:584x584/11EE7D61706D472F9A5D71EB94149304.webp"
-                }
-                details={
-                  "Маринованные огурчики, Свежие томаты, Красный лук, Сочные ананасы, Итальянские травы, Сладкий перец, Кубики брынзы, Митболы"
-                }
-                name={"Чоризо фреш"}
-                price={5}
-                quantity={1}
-              />
+              {items.map((item) => (
+                <CheckoutItem
+                  key={item.id}
+                  id={item.id}
+                  imageUrl={item.imageUrl}
+                  name={item.name}
+                  price={item.price}
+                  quantity={item.quantity}
+                  onClickCountButton={(type) =>
+                    onClickCountButton(item.id, item.quantity, type)
+                  }
+                  onClickRemove={() => removeCartItem(item.id)}
+                  details={getCartItemDetails(
+                    item.ingredients,
+                    item.pizzaType as PizzaType,
+                    item.pizzaSize as PizzaSize
+                  )}
+                />
+              ))}
             </div>
           </WhiteBlock>
 
@@ -64,50 +89,12 @@ export default function checkoutPage() {
           </WhiteBlock>
         </div>
         {/*right */}
-        <div className="w-[450px]">
-          <WhiteBlock className="p-6 sticky top-4">
-            <div className="flex flex-col gap-1">
-              <span className="text-xl">Итого:</span>
-              <span className="text-[34px] font-extrabold">{3} Br</span>
-            </div>
-
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Package size={18} className="mr-2 text-gray-400" />
-                  Стоимость товаров:
-                </div>
-              }
-              value={35}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Percent size={18} className="mr-2 text-gray-400" />
-                  налоги:
-                </div>
-              }
-              value={35}
-            />
-            <CheckoutItemDetails
-              title={
-                <div className="flex items-center">
-                  <Truck size={18} className="mr-2 text-gray-400" />
-                  доставка:
-                </div>
-              }
-              value={35}
-            />
-
-            <Button
-              type="submit"
-              className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
-            >
-              перейти к оплате
-              <ArrowRight className="w-5 ml-2" />
-            </Button>
-          </WhiteBlock>
-        </div>
+        <CheckoutSideBar
+          totalPrice={totalPrice}
+          totalAmount={totalAmount}
+          VATprice={VATprice}
+          DELIVERY={DELIVERY}
+        />
       </div>
     </Container>
   );
