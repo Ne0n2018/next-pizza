@@ -33,6 +33,7 @@
     "next": "15.1.0",
     "qs": "^6.13.1",
     "react": "^19.0.0",
+    "react-dadata": "^2.27.4",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-hot-toast": "^2.5.2",
