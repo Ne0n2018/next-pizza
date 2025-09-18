@@ -1,13 +1,14 @@
 import React from "react";
 import { WhiteBlock } from "./white-block";
 import { Package, Percent, Truck, ArrowRight } from "lucide-react";
-import { Button } from "../ui";
+import { Button, Skeleton } from "../ui";
 import { CheckoutItemDetails } from "./checkout-item-details";
 import { cn } from "@/shared/lib/utils";
 
 interface Props {
   totalPrice: number;
   totalAmount: number;
+  loading?: boolean;
   VATprice: number;
   DELIVERY: number;
   className?: string;
@@ -17,6 +18,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
   className,
   totalPrice,
   totalAmount,
+  loading,
   VATprice,
   DELIVERY,
 }) => {
@@ -25,7 +27,13 @@ export const CheckoutSideBar: React.FC<Props> = ({
       <WhiteBlock className="p-6 sticky top-4">
         <div className="flex flex-col gap-1">
           <span className="text-xl">Итого:</span>
-          <span className="text-[34px] font-extrabold">{totalPrice} Br</span>
+          {loading ? (
+            <Skeleton className="w-13 h-[51px]" />
+          ) : (
+            <span className="text-[34px] w-13  font-extrabold">
+              {totalPrice} Br
+            </span>
+          )}
         </div>
 
         <CheckoutItemDetails
@@ -35,7 +43,9 @@ export const CheckoutSideBar: React.FC<Props> = ({
               Стоимость товаров:
             </div>
           }
-          value={totalAmount}
+          value={
+            loading ? <Skeleton className="w-10 h-4" /> : `${totalAmount} Br`
+          }
         />
         <CheckoutItemDetails
           title={
@@ -44,7 +54,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
               налоги:
             </div>
           }
-          value={VATprice}
+          value={loading ? <Skeleton className="w-10 h-4" /> : `${VATprice} Br`}
         />
         <CheckoutItemDetails
           title={
@@ -53,7 +63,7 @@ export const CheckoutSideBar: React.FC<Props> = ({
               доставка:
             </div>
           }
-          value={DELIVERY}
+          value={loading ? <Skeleton className="w-10 h-4" /> : `${DELIVERY} Br`}
         />
 
         <Button
