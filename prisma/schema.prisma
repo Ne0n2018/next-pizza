@@ -121,7 +121,7 @@ model Order {
     token String
 
     totalAmount Int
-    status      OrderStatus
+    status      OrderStatus 
     paymentId   String?
 
     items Json

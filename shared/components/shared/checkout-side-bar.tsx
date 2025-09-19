@@ -23,18 +23,16 @@ export const CheckoutSideBar: React.FC<Props> = ({
   DELIVERY,
 }) => {
   return (
-    <div className={cn("w-[450px]", className)}>
-      <WhiteBlock className="p-6 sticky top-4">
-        <div className="flex flex-col gap-1">
-          <span className="text-xl">Итого:</span>
-          {loading ? (
-            <Skeleton className="w-13 h-[51px]" />
-          ) : (
-            <span className="text-[34px] w-13  font-extrabold">
-              {totalPrice} Br
-            </span>
-          )}
-        </div>
+    <WhiteBlock className={cn("p-6 sticky top-4", className)}>
+      <div className="flex flex-col gap-1">
+        <span className="text-xl">Итого:</span>
+        {loading ? (
+          <Skeleton className="w-13 h-[51px]" />
+        ) : (
+          <span className="text-[34px] w-13 font-extrabold">
+            {totalPrice} Br
+          </span>
+        )}
 
         <CheckoutItemDetails
           title={
@@ -65,15 +63,15 @@ export const CheckoutSideBar: React.FC<Props> = ({
           }
           value={loading ? <Skeleton className="w-10 h-4" /> : `${DELIVERY} Br`}
         />
-
         <Button
           type="submit"
+          disabled={loading} // Блокируем при загрузке
           className="w-full h-14 rounded-2xl mt-6 text-base font-bold"
         >
           перейти к оплате
           <ArrowRight className="w-5 ml-2" />
         </Button>
-      </WhiteBlock>
-    </div>
+      </div>
+    </WhiteBlock>
   );
 };

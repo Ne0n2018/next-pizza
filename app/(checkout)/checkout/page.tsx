@@ -15,11 +15,14 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/shared/lib/utils";
 import { createOrder } from "@/app/actions";
+import toast from "react-hot-toast";
+import React from "react";
 
 const VAT = 10;
 const DELIVERY = 2;
 
 export default function CheckoutPage() {
+  const [submitting, setSubmitting] = React.useState(false);
   const { totalAmount, updateItemQuantity, items, removeCartItem, loading } =
     useCart();
 
@@ -33,14 +36,28 @@ export default function CheckoutPage() {
       lastName: "",
       email: "",
       phone: "",
-      adress: "",
+      address: "",
       comment: "",
     },
   });
 
-  const onSubmit = (data: CheckoutFormValues) => {
-    createOrder(data);
-    console.log(form);
+  const onSubmit = async (data: CheckoutFormValues) => {
+    try {
+      setSubmitting(true);
+      const url = await createOrder(data);
+      toast.success("заказ успешно оформлен! 📝 Переход на оплату... ", {
+        icon: "✅",
+      });
+      if (url) {
+        location.href = url;
+      }
+    } catch (err) {
+      console.log(err);
+      setSubmitting(false);
+      toast.error("не удалось создать заказ", {
+        icon: "❌",
+      });
+    }
   };
 
   const onClickCountButton = (
@@ -58,11 +75,9 @@ export default function CheckoutPage() {
         text="оформление заказа"
         className="font-extrabold mb-8 text-[36px]"
       />
-
       <FormProvider {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex gap-10">
-            {/* left */}
             <div className="flex flex-col flex-1 gap-10 mb-20">
               <CheckoutCart
                 items={items}
@@ -77,13 +92,12 @@ export default function CheckoutPage() {
                 className={cn(loading && "opacity-40 pointer-events-none")}
               />
             </div>
-            {/* right */}
             <CheckoutSideBar
               totalPrice={totalPrice}
               totalAmount={totalAmount}
               VATprice={VATprice}
               DELIVERY={DELIVERY}
-              loading={loading}
+              loading={submitting || loading}
             />
           </div>
         </form>

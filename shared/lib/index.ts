@@ -4,3 +4,4 @@ export { usePizzaOptions } from "../hooks/use-pizza-options";
 export { getPizzaDetails } from "./get-pizza-details";
 export { findOrCreate } from "./find-or-create-cart";
 export { getCartItemDetails } from "./get-cart-item-details";
+export { sendEmail } from "./send-email";
