@@ -6,7 +6,7 @@ import {
   PayOrderTemplate,
 } from "@/shared/components/shared";
 
-import { sendEmail } from "@/shared/lib";
+import { createPayment, sendEmail } from "@/shared/lib";
 import { OrderStatus } from "@prisma/client";
 
 import { cookies } from "next/headers";
@@ -74,15 +74,38 @@ export async function createOrder(data: CheckoutFormValues) {
       },
     });
 
+    const paymentData = await createPayment({
+      description: "Оплата заказа #" + order.id,
+      orderId: order.id,
+      amount: order.totalAmount,
+    });
+
+    if (!paymentData) {
+      throw new Error("Payment data not found");
+    }
+
+    await prisma.order.update({
+      where: {
+        id: order.id,
+      },
+      data: {
+        paymentId: paymentData.id,
+      },
+    });
+
+    const paymentUrl = paymentData.confirmation.confirmation_url;
+
     await sendEmail(
       data.email,
-      "Next Pizza / оплатите заказ #" + order.id,
+      "Next Pizza / оплатите заказ # " + order.id,
       PayOrderTemplate({
         orderId: order.id,
         totalAmount: order.totalAmount,
-        paymentUrl: "https://resend.com/onboarding",
+        paymentUrl,
       })
     );
+
+    return paymentUrl;
   } catch (error) {
     console.log(error);
   }
