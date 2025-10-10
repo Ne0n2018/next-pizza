@@ -1,12 +1,18 @@
 "use client";
 
 import React from "react";
-import { AddressSuggestions } from "react-dadata";
+import dynamic from "next/dynamic";
 import "react-dadata/dist/react-dadata.css";
 
 interface Props {
   onChange?: (value?: string) => void;
 }
+
+const AddressSuggestions = dynamic(
+  () =>
+    import("react-dadata").then((mod) => ({ default: mod.AddressSuggestions })),
+  { ssr: false }
+);
 
 export const AddressInput: React.FC<Props> = ({ onChange }) => {
   return (
