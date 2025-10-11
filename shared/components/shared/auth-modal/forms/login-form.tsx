@@ -55,19 +55,20 @@ export const LoginForm: React.FC<Props> = ({ onClose }) => {
           <div className="mr-2">
             <Title text="вход в аккаунт" size="md" className="font-bold" />
             <p className="text-gray-400">
-              Введите свою почту чтобы войти в аккаунт
+              Введите свою почту и пароль чтобы войти в аккаунт
             </p>
           </div>
-          <Image
-            src={"/public/assets/phone-icon.png"}
-            alt={""}
-            width={60}
-            height={60}
-          />
+          <Image src="/assets/phone-icon.png" alt={""} width={60} height={60} />
         </div>
 
-        <FormInput name="email" label="E-mail" required />
-        <FormInput name="password" label="Пароль" type="password" required />
+        <FormInput name="email" label="E-mail" placeholder="почта" required />
+        <FormInput
+          name="password"
+          label="Пароль"
+          type="password"
+          placeholder="пароль"
+          required
+        />
 
         <Button
           className="h-12 text-base"
