@@ -2,10 +2,10 @@
 
 import { prisma } from "@/prisma/prisma-client";
 import {
-  CheckoutFormValues,
   PayOrderTemplate,
   VerificationUserTemplate,
 } from "@/shared/components/shared";
+import { CheckoutFormValues } from "@/shared/components/shared/checkout/checkout-form-schema";
 
 import { createPayment, sendEmail } from "@/shared/lib";
 import { getUserSession } from "@/shared/lib/get-user-session";
