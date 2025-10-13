@@ -6,7 +6,7 @@ import {
   formRegisterSchema,
   TFormRegisterValues,
 } from "./auth-modal/forms/schemas";
-import { User } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
 import { Container } from "./container";
@@ -50,6 +50,9 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
       callbackUrl: "/",
     });
   };
+  const toAdmin = () => {
+    window.location.href = "/dashboard";
+  };
   return (
     <Container className="my-10">
       <Title
@@ -57,6 +60,11 @@ export const ProfileForm: React.FC<Props> = ({ data }) => {
         size="md"
         className="font-bold"
       />
+      {data.role === UserRole.ADMIN && (
+        <Button className="mt-10" onClick={toAdmin}>
+          Админ панель
+        </Button>
+      )}
       <FormProvider {...form}>
         <form
           className="flex flex-col gap-5 w-96 mt-10"

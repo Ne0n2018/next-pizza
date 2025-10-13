@@ -1,3 +1,5 @@
+import { Header } from "@/shared/components/shared/dashboard";
+
 export const metadata = {
   title: "Dashboard",
   description: "About page",
@@ -10,7 +12,10 @@ export default function DashboardLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
